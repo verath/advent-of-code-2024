@@ -6,14 +6,19 @@ INPUT = (SCRIPT_DIR / "input.txt").read_text().strip()
 
 
 Coord = tuple[int, int]
+Lookup = dict[Coord, str]
 
 
-def part1(input: str) -> int:
-    lookup: dict[Coord, str] = {}
+def parse(input: str) -> Lookup:
+    lookup = {}
     for y, line in enumerate(input.splitlines()):
         for x, ch in enumerate(line):
             lookup[(x, y)] = ch
+    return lookup
 
+
+def part1(input: str) -> int:
+    lookup = parse(input)
     directions = [
         (1, 0),  # horizontal forward
         (-1, 0),  # horizontal backward
@@ -41,11 +46,25 @@ def part1(input: str) -> int:
 
 
 def part2(input: str) -> int:
-    return -1
+    lookup = parse(input)
+
+    def is_x_mas(start_pos: Coord) -> bool:
+        if lookup[start_pos] != "A":
+            return False
+        x, y = start_pos
+        ul = lookup.get((x - 1, y - 1), "")
+        ur = lookup.get((x + 1, y - 1), "")
+        dr = lookup.get((x + 1, y + 1), "")
+        dl = lookup.get((x - 1, y + 1), "")
+        diag_a = ul + dr
+        diag_b = ur + dl
+        return (diag_a == "MS" or diag_a == "SM") and (diag_b == "MS" or diag_b == "SM")
+
+    return sum(is_x_mas(pos) for pos in lookup.keys())
 
 
-class Day03Test(unittest.TestCase):
-    TEST_INPUT_PART1 = """
+class Day04Test(unittest.TestCase):
+    TEST_INPUT = """
 MMMSXXMASM
 MSAMXMSMSA
 AMXSXMAAMM
@@ -59,12 +78,12 @@ MXMXAXMASX
 """.strip()
 
     def test_part1(self) -> None:
-        self.assertEqual(part1(self.TEST_INPUT_PART1), 18)
+        self.assertEqual(part1(self.TEST_INPUT), 18)
         self.assertEqual(part1(INPUT), 2462)
 
-    # def test_part2(self) -> None:
-    #     self.assertEqual(part2(TEST_INPUT_PART2), 48)
-    #     self.assertEqual(part2(INPUT), 0)
+    def test_part2(self) -> None:
+        self.assertEqual(part2(self.TEST_INPUT), 9)
+        self.assertEqual(part2(INPUT), 1877)
 
 
 if __name__ == "__main__":
