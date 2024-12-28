@@ -3,8 +3,6 @@ import heapq
 import collections
 from pathlib import Path
 
-from shared import a
-
 SCRIPT_DIR = Path(__file__).parent
 INPUT = (SCRIPT_DIR / "input.txt").read_text()
 TEST_INPUT = """
