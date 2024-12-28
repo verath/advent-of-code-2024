@@ -9,16 +9,16 @@ Coord = tuple[int, int]
 Lookup = dict[Coord, str]
 
 
-def parse(input: str) -> Lookup:
+def parse(input_str: str) -> Lookup:
     lookup = {}
-    for y, line in enumerate(input.splitlines()):
+    for y, line in enumerate(input_str.splitlines()):
         for x, ch in enumerate(line):
             lookup[(x, y)] = ch
     return lookup
 
 
-def part1(input: str) -> int:
-    lookup = parse(input)
+def part1(input_str: str) -> int:
+    lookup = parse(input_str)
     directions = [
         (1, 0),  # horizontal forward
         (-1, 0),  # horizontal backward
@@ -39,14 +39,14 @@ def part1(input: str) -> int:
         return True
 
     num_found = 0
-    for pos in lookup.keys():
+    for pos in lookup:
         num_found += sum(check_direction(pos, dir) for dir in directions)
 
     return num_found
 
 
-def part2(input: str) -> int:
-    lookup = parse(input)
+def part2(input_str: str) -> int:
+    lookup = parse(input_str)
 
     def is_x_mas(start_pos: Coord) -> bool:
         if lookup[start_pos] != "A":
@@ -58,9 +58,9 @@ def part2(input: str) -> int:
         dl = lookup.get((x - 1, y + 1), "")
         diag_a = ul + dr
         diag_b = ur + dl
-        return (diag_a == "MS" or diag_a == "SM") and (diag_b == "MS" or diag_b == "SM")
+        return diag_a in {"MS", "SM"} and diag_b in {"MS", "SM"}
 
-    return sum(is_x_mas(pos) for pos in lookup.keys())
+    return sum(is_x_mas(pos) for pos in lookup)
 
 
 class Day04Test(unittest.TestCase):

@@ -15,12 +15,12 @@ TEST_INPUT = """
 """.strip()
 
 
-def part1(input: str) -> int:
-    left_list = []
-    right_list = []
-    for line in input.splitlines():
-        left, right = line.split("   ")
-        left, right = int(left), int(right)
+def part1(input_str: str) -> int:
+    left_list: list[int] = []
+    right_list: list[int] = []
+    for line in input_str.splitlines():
+        left_str, right_str = line.split("   ")
+        left, right = int(left_str), int(right_str)
         heapq.heappush(left_list, left)
         heapq.heappush(right_list, right)
 
@@ -33,12 +33,12 @@ def part1(input: str) -> int:
     return total_diff
 
 
-def part2(input: str) -> int:
+def part2(input_str: str) -> int:
     left_list = []
-    right_lookup = collections.Counter()
-    for line in input.splitlines():
-        left, right = line.split("   ")
-        left, right = int(left), int(right)
+    right_lookup: collections.Counter[int] = collections.Counter()
+    for line in input_str.splitlines():
+        left_str, right_str = line.split("   ")
+        left, right = int(left_str), int(right_str)
         right_lookup[right] += 1
         left_list.append(left)
 
@@ -57,7 +57,7 @@ class Day01Test(unittest.TestCase):
         self.assertEqual(part2(INPUT), 20719933)
 
 
-def main():
+def main() -> None:
     unittest.main(exit=False)
     print("part1:", part1(INPUT))
     print("part2:", part2(INPUT))

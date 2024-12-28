@@ -5,11 +5,13 @@ SCRIPT_DIR = Path(__file__).parent
 INPUT = (SCRIPT_DIR / "input.txt").read_text()
 
 
-def part1(input: str) -> int:
+def part1(input_str: str) -> int:
+    len(input_str)
     return -1
 
 
-def part2(input: str) -> int:
+def part2(input_str: str) -> int:
+    len(input_str)
     return -1
 
 

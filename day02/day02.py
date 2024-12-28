@@ -30,21 +30,21 @@ def check_safe(levels: list[int]) -> bool:
     return True
 
 
-def read_levels(input: str) -> Generator[list[int], None, None]:
-    for line in input.splitlines():
+def read_levels(input_str: str) -> Generator[list[int], None, None]:
+    for line in input_str.splitlines():
         yield [int(c) for c in line.split(" ")]
 
 
-def part1(input: str) -> int:
+def part1(input_str: str) -> int:
     num_safe = 0
-    for levels in read_levels(input):
+    for levels in read_levels(input_str):
         num_safe += 1 if check_safe(levels) else 0
     return num_safe
 
 
-def part2(input: str) -> int:
+def part2(input_str: str) -> int:
     num_safe = 0
-    for levels in read_levels(input):
+    for levels in read_levels(input_str):
         is_safe = check_safe(levels)
         if not is_safe:
             for i in range(len(levels)):

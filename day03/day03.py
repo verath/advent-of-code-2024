@@ -55,27 +55,27 @@ def parse_instructions(s: str) -> Generator[Instruction, None, None]:
             s = s[1:]
 
 
-def part1(input: str) -> int:
+def part1(input_str: str) -> int:
     return sum(
         inst.lhs * inst.rhs
-        for inst in parse_instructions(input)
+        for inst in parse_instructions(input_str)
         if isinstance(inst, Mul)
     )
 
 
-def part2(input: str) -> int:
-    sum = 0
+def part2(input_str: str) -> int:
+    total = 0
     enabled = True
-    for instruction in parse_instructions(input):
+    for instruction in parse_instructions(input_str):
         match instruction:
             case Do():
                 enabled = True
             case Dont():
                 enabled = False
             case Mul(lhs, rhs) if enabled:
-                sum += lhs * rhs
+                total += lhs * rhs
 
-    return sum
+    return total
 
 
 class Day03Test(unittest.TestCase):
